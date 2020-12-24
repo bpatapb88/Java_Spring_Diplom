@@ -2,12 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" >
 <head>
 
-
     <title>Главная страница</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
-
 
     <script src="https://d3js.org/d3.v3.js"></script>
     <script src="https://dagrejs.github.io/project/graphlib-dot/v0.6.3/graphlib-dot.js"></script>
@@ -37,13 +35,9 @@ body {
 <header th:insert="blocks/header :: header"></header>
 <div class="container">
     <h2>Graph Visualization</h2>
-
     <svg width=1400 height=600>
             <g></g>
     </svg>
-
-    <p>Getting started with Firebase</p>
-    <h1 id="bigOne"> Test </h1>
 
     <script type="text/javascript">
 
@@ -211,31 +205,5 @@ render_graph(render);
 
 <div th:insert="blocks/footer :: footer"></div>
 
-<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
-
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyCRj_gO-g-j-&#45;&#45;zMNsSWELUcMnh25n4dmI",
-    authDomain: "springboot-dagrejs.firebaseapp.com",
-    projectId: "springboot-dagrejs",
-    storageBucket: "springboot-dagrejs.appspot.com",
-    messagingSenderId: "57287386545",
-    appId: "1:57287386545:web:0f7e33ea18029e7161c990"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
-  var ref = firebase.database().ref();
-
-ref.on("value", function(snapshot) {
-   console.log(snapshot.val());
-}, function (error) {
-   console.log("Error321: " + error.code);
-});
-
-</script>
 </body>
 </html>
