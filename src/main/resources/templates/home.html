@@ -39,7 +39,12 @@ body {
             <g></g>
     </svg>
 
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+
+    var nodes = /*[[${nodes}]]*/ 'default';
+    var edges = /*[[${edges}]]*/;
+/*]]>*/
 
 // Create a new directed graph
 var g = new dagreD3.graphlib.Graph().setGraph({});
@@ -55,13 +60,6 @@ function shuffle(a) {
     }
     return a;
 }
-
-var nodes = [ "10007154_1100", "148570017_1100", "148570018_1100", "148570019_1100",
-               "148570025_1100", "148570010_1100", "148570021_1100", "148570020_1100",
-               "148570026_1100", "148570011_1100", "148570022_1100", "148570010_1200",
-               "148570020_1200", "148570026_1200", "148570023_1100", "148570011_1200",
-               "148570023_1200"
-            ];
 
 var edgeList = [["10007154_1100","148570017_1100",{"label":""}],
 ["148570017_1100","148570018_1100",{"label":"148570018"}],
@@ -82,6 +80,8 @@ var edgeList = [["10007154_1100","148570017_1100",{"label":""}],
 ["148570011_1200","10007154_1100",{"label":""}],
 ["148570022_1100","148570023_1100",{"label":""}],
 ["148570023_1100","148570023_1200",{"label":""}] ];
+
+console.log(edges);
 
 var svg = d3.select("svg"),
     inner = svg.select("g");
@@ -169,7 +169,6 @@ function render_graph(render) {
       var g = new dagreD3.graphlib.Graph().setGraph({});
       nodes.forEach(function(node) {
           g.setNode(node, {label: node , shape: "circle" });
-
       });
       optimalArray.forEach((edge)=>{
          g.setEdge.apply(g, edge);
