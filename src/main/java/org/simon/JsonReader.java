@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 public class JsonReader {
     private static String readAll(Reader rd) throws IOException {
@@ -30,8 +31,24 @@ public class JsonReader {
         }
     }
 
-    public static JSONArray getBox(JSONObject jsonText){
-        JSONArray jsonArray = jsonText.getJSONArray("0");
-        return jsonArray;
+    public static Object[] getBoxes(JSONArray jsonlist){
+        ArrayList<String> nodes = new ArrayList<>();
+        ArrayList<String> shapes = new ArrayList<>();
+        ArrayList<String[]> edges = new ArrayList<>();
+        for (int i = 0; i< jsonlist.length(); i++){
+            nodes.add(jsonlist.getJSONObject(i).getString("name"));
+            shapes.add(jsonlist.getJSONObject(i).getString("shape"));
+            if(jsonlist.getJSONObject(i).length() == 3) {
+                for (int j = 0; j < jsonlist.getJSONObject(i).getJSONArray("links").length(); j++) {
+                    String[] temp = {jsonlist.getJSONObject(i).getString("name"), jsonlist.getJSONObject(i).getJSONArray("links").getString(j)};
+                    edges.add(temp);
+                }
+
+            }
+        }
+
+        Object[] objects = {nodes,edges,shapes};
+
+        return objects;
     }
 }

@@ -18,28 +18,17 @@ import org.json.JSONObject;
 @Controller
 public class MainController {
 
+    public static final String firebaseJson = "https://springboot-dagrejs-default-rtdb.europe-west1.firebasedatabase.app/.json";
+
     @GetMapping("/")
     public String home(Model model) throws IOException {
 
-        JSONObject json = JsonReader.readJsonFromUrl("https://springboot-dagrejs-default-rtdb.europe-west1.firebasedatabase.app/.json");
+        JSONObject json = JsonReader.readJsonFromUrl(firebaseJson);
         JSONArray jsonlist = json.getJSONArray("boxes");
-        ArrayList<String> nodes = new ArrayList<>();
-        ArrayList<String> shapes = new ArrayList<>();
-        ArrayList<String[]> edges = new ArrayList<>();
-        for (int i = 0; i< jsonlist.length(); i++){
-            nodes.add(jsonlist.getJSONObject(i).getString("name"));
-            shapes.add(jsonlist.getJSONObject(i).getString("shape"));
-            if(jsonlist.getJSONObject(i).length() == 3) {
-                for (int j = 0; j < jsonlist.getJSONObject(i).getJSONArray("links").length(); j++) {
-                    String[] temp = {jsonlist.getJSONObject(i).getString("name"), jsonlist.getJSONObject(i).getJSONArray("links").getString(j)};
-                    edges.add(temp);
-                }
-
-            }
-        }
-        model.addAttribute("nodes", nodes);
-        model.addAttribute("edges", edges);
-        model.addAttribute("shapes", shapes);
+        Object[] attributes = JsonReader.getBoxes(jsonlist);
+        model.addAttribute("nodes", attributes[0]);
+        model.addAttribute("edges", attributes[1]);
+        model.addAttribute("shapes", attributes[2]);
         return "home";
     }
 }
