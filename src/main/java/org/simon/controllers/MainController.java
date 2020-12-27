@@ -19,32 +19,27 @@ import org.json.JSONObject;
 public class MainController {
 
     @GetMapping("/")
-    public String home(Model model) throws ExecutionException, InterruptedException, IOException {
-        /*Iterable<Links> links = linksRepository.findAll();
-        model.addAttribute("links", links);
-        model.addAttribute("name", " World");*/
+    public String home(Model model) throws IOException {
 
         JSONObject json = JsonReader.readJsonFromUrl("https://springboot-dagrejs-default-rtdb.europe-west1.firebasedatabase.app/.json");
-        System.out.println(json.toString());
         JSONArray jsonlist = json.getJSONArray("boxes");
         ArrayList<String> nodes = new ArrayList<>();
+        ArrayList<String> shapes = new ArrayList<>();
         ArrayList<String[]> edges = new ArrayList<>();
         for (int i = 0; i< jsonlist.length(); i++){
             nodes.add(jsonlist.getJSONObject(i).getString("name"));
+            shapes.add(jsonlist.getJSONObject(i).getString("shape"));
             if(jsonlist.getJSONObject(i).length() == 3) {
                 for (int j = 0; j < jsonlist.getJSONObject(i).getJSONArray("links").length(); j++) {
                     String[] temp = {jsonlist.getJSONObject(i).getString("name"), jsonlist.getJSONObject(i).getJSONArray("links").getString(j)};
                     edges.add(temp);
                 }
-                System.out.println(jsonlist.getJSONObject(i).getJSONArray("links"));
+
             }
         }
         model.addAttribute("nodes", nodes);
         model.addAttribute("edges", edges);
+        model.addAttribute("shapes", shapes);
         return "home";
     }
-
-    String firebaselink = "https://springboot-dagrejs-default-rtdb.europe-west1.firebasedatabase.app/.json";
-
-
 }
