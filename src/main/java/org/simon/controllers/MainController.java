@@ -1,19 +1,14 @@
 package org.simon.controllers;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.simon.JsonReader;
+import org.simon.Attributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import java.io.*;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.io.IOException;
 
 @Controller
 public class MainController {
@@ -22,13 +17,14 @@ public class MainController {
 
     @GetMapping("/")
     public String home(Model model) throws IOException {
+        JsonReader jsonReader = new JsonReader();
 
-        JSONObject json = JsonReader.readJsonFromUrl(firebaseJson);
-        JSONArray jsonlist = json.getJSONArray("boxes");
-        Object[] attributes = JsonReader.getBoxes(jsonlist);
-        model.addAttribute("nodes", attributes[0]);
-        model.addAttribute("edges", attributes[1]);
-        model.addAttribute("shapes", attributes[2]);
+        JSONObject json = jsonReader.readJsonFromUrl(firebaseJson);
+        JSONArray jsonList = json.getJSONArray("boxes");
+        Attributes attributes = jsonReader.getBoxes(jsonList);
+        model.addAttribute("nodes", attributes.getNodes());
+        model.addAttribute("edges", attributes.getEdges());
+        model.addAttribute("shapes", attributes.getShapes());
         return "home";
     }
 }
