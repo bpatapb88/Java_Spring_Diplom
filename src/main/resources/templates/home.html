@@ -17,14 +17,14 @@
 <div class="container">
     <h2>Graph Visualization</h2>
     <svg width=1400 height=600>
-            <g></g>
+        <g></g>
     </svg>
 
     <script th:inline="javascript">
 /*<![CDATA[*/
     var nodes = /*[[${nodes}]]*/;
     var shapes = /*[[${shapes}]]*/;
-    var edgeList2 = /*[[${edges}]]*/;
+    var edgeList = /*[[${edges}]]*/;
 /*]]>*/
     </script>
     <script type="text/javascript" src="script.js">

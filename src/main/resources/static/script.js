@@ -1,21 +1,21 @@
 // Create a new directed graph
-var g = new dagreD3.graphlib.Graph().setGraph({});
+var graph = new dagreD3.graphlib.Graph().setGraph({});
 
 // function to shuffle the list...
-function shuffle(a) {
-    var j, x, i;
-    for (i = a.length; i; i -= 1) {
-        j = Math.floor(Math.random() * i);
-        x = a[i - 1];
-        a[i - 1] = a[j];
-        a[j] = x;
+function shuffle(edgeList) {
+    var randomValue, tempEdge, i;
+    for (i = edgeList.length; i; i -= 1) {
+        randomValue = Math.floor(Math.random() * i);
+        tempEdge = edgeList[i - 1];
+        edgeList[i - 1] = edgeList[randomValue];
+        edgeList[randomValue] = tempEdge;
     }
-    return a;
+    return edgeList;
 }
 
 // set Labels for edges
-for(var i = 0; i< edgeList2.length; i++){
-edgeList2[i].push({"label":"" + edgeList2[i][1]});
+for(var i = 0; i< edgeList.length; i++){
+edgeList[i].push({"label":"" + edgeList[i][1]});
 }
 
 var svg = d3.select("svg"),
@@ -27,24 +27,24 @@ function render_graph(render) {
   var iter_cnt = 0;
   var optimalArray, best_result;
   while(max_cnt--) {
-      var g = new dagreD3.graphlib.Graph().setGraph({});
+      var graph = new dagreD3.graphlib.Graph().setGraph({});
       for(var i = 0; i < nodes.length; i++){
-            g.setNode(nodes[i], { label: nodes[i], shape: shapes[i] });
+            graph.setNode(nodes[i], { label: nodes[i], shape: shapes[i] });
       }
 
       // set edges... randomize the list
-      var list = shuffle(edgeList2);
+      var list = shuffle(edgeList);
       if(!optimalArray) optimalArray = list;
 
-      edgeList2.forEach((edge)=>{
-         g.setEdge.apply(g, edge);
+      edgeList.forEach((edge)=>{
+         graph.setEdge.apply(graph, edge);
       })
 
       // Set the rankdir
-      g.graph().rankdir = "LR";
-      g.graph().nodesep = 60;
+      graph.graph().rankdir = "LR";
+      graph.graph().nodesep = 60;
 
-      render(inner, g);
+      render(inner, graph);
 
       var nn = svg.select(".edgePaths");
       var paths = nn[0][0];
@@ -102,25 +102,25 @@ function render_graph(render) {
 
   // if no optimal was found just render what was found...
   if(best_result >= 0 ) {
-      var g = new dagreD3.graphlib.Graph().setGraph({});
+      var graph = new dagreD3.graphlib.Graph().setGraph({});
       for(var i = 0; i < nodes.length; i++){
-                  g.setNode(nodes[i], { label: nodes[i], shape: shapes[i] });
+                  graph.setNode(nodes[i], { label: nodes[i], shape: shapes[i] });
             }
-      edgeList2.forEach((edge)=>{
-         g.setEdge.apply(g, edge);
+      edgeList.forEach((edge)=>{
+         graph.setEdge.apply(g, edge);
       })
-      g.graph().rankdir = "LR";
-      g.graph().nodesep = 60;
+      graph.graph().rankdir = "LR";
+      graph.graph().nodesep = 60;
       render(inner, g);
   }
 
   // Center the graph
   var initialScale = 0.75;
   zoom
-    .translate([(svg.attr("width") - g.graph().width * initialScale) / 2, 20])
+    .translate([(svg.attr("width") - graph.graph().width * initialScale) / 2, 20])
     .scale(initialScale)
     .event(svg);
-  svg.attr('height', g.graph().height * initialScale + 40);
+  svg.attr('height', graph.graph().height * initialScale + 40);
 
 }
 
