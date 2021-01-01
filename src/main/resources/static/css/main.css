@@ -8,8 +8,7 @@ body {
 
 .node rect,
 .node circle,
-.node ellipse,
-.node polygon {
+.node ellipse {
   stroke: #333;
   fill: #cccccc;
 }

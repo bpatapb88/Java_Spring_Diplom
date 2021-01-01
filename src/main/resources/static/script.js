@@ -40,7 +40,7 @@ function render_graph(render) {
          graph.setEdge.apply(graph, edge);
       })
 
-      // Set the rankdir
+      // Set the rankdir TB - Top -> Bottom; LR - Left -> Right
       graph.graph().rankdir = "LR";
       graph.graph().nodesep = 60;
 

@@ -14,7 +14,8 @@
     <artifactId>Java_Spring_Diplom</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Java_Spring_Diplom</name>
-    <description>Проект на Java Spring</description>
+    <description>Project on Java Spring</description>
+    <packaging>war</packaging>
 
     <properties>
         <java.version>11</java.version>

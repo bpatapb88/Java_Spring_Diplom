@@ -31,20 +31,19 @@ public class JsonReader {
         }
     }
 
-    public Attributes getBoxes(JSONArray jsonlist){
+    public Attributes getBoxes(JSONArray jsonList) throws JSONException{
         Attributes attributes = new Attributes();
-        for (int i = 0; i< jsonlist.length(); i++){
-            final JSONObject jsonObject = jsonlist.getJSONObject(i);
-            attributes.getNodes().add(jsonObject.getString("name"));
-            attributes.getShapes().add(jsonObject.getString("shape"));
-            // TODO comment why 3?
-            if(jsonlist.getJSONObject(i).length() == 3) {
-                for (int j = 0; j < jsonObject.getJSONArray("links").length(); j++) {
-                    String[] temp = {jsonObject.getString("name"), jsonObject.getJSONArray("links").getString(j)};
-                    attributes.getEdges().add(temp);
+            for (int i = 0; i < jsonList.length(); i++) {
+                final JSONObject jsonObject = jsonList.getJSONObject(i);
+                attributes.getNodes().add(jsonObject.getString("name"));
+                attributes.getShapes().add(jsonObject.getString("shape"));
+                if (jsonObject.has("links")) {
+                    for (int j = 0; j < jsonObject.getJSONArray("links").length(); j++) {
+                        String[] temp = {jsonObject.getString("name"), jsonObject.getJSONArray("links").getString(j)};
+                        attributes.getEdges().add(temp);
+                    }
                 }
             }
-        }
         return attributes;
     }
 }
